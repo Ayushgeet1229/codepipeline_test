@@ -22,7 +22,7 @@ Resources:
           yum install -y httpd # install web server 
           systemctl start httpd
           systemctl enable httpd
-          echo "Hello World" > /var/www/html/index.html
+          echo "Chai penee chle" > /var/www/html/index.html
 
       
 
