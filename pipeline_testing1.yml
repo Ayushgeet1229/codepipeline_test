@@ -19,7 +19,7 @@ Parameters:
   InstanceImageId:
     Description: EC2 Image Id from this region
     Type: AWS::EC2::Image::Id
-    Default: ami-0cb0e70f44e1a4bb5 # defaults for amazon linux in mumbai region  
+    Default: ami-0ab4d1e9cf9a1215a # defaults for amazon linux in mumbai region  
 
 Resources:
   # create a security group
