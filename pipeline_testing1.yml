@@ -5,21 +5,7 @@ Description:
   After deleting stack, remember to delete the associated S3 bucket.
 
 # get the name of the base stack which is created first and has VPC details
-Parameters:
-  VPCStackName:
-    Description: Name of the base VPC stack
-    Type: String
-    Default: BaseStack
 
-  InstanceType:
-    Description: EC2 instance type
-    Type: String
-    Default: t2.micro
-
-  InstanceImageId:
-    Description: EC2 Image Id from this region
-    Type: AWS::EC2::Image::Id
-    Default: ami-0ab4d1e9cf9a1215a # defaults for amazon linux in mumbai region  
 
 Resources:
   # create a security group
@@ -49,25 +35,17 @@ Resources:
            Ref: "AWS::StackName"
 
   # allow local traffic
-  SGBaseIngress:
-    Type: AWS::EC2::SecurityGroupIngress
-    Properties:
-      GroupId: !Ref mySG
-      IpProtocol: '-1'
-      FromPort: '-1'
-      ToPort: '-1'
-      SourceSecurityGroupId: !Ref mySG
+  
 
   # EC2 instance which will have access for http and ssh
   EC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      InstanceType: !Ref InstanceType
-      SubnetId:
-        Fn::ImportValue: !Sub "${VPCStackName}-SUBNET"      
+      InstanceType: t2.micro
+        
       SecurityGroupIds:
         - !Ref mySG
-      ImageId: !Ref InstanceImageId
+      ImageId: ami-0ab4d1e9cf9a1215a
       UserData: 
         Fn::Base64: |
           #!/bin/bash -xe
@@ -84,20 +62,4 @@ Resources:
          Value:
            Ref: "AWS::StackName"
 
-# output important values for easy viewing in cloudformation dashboard
-Outputs:
-  InstanceId:
-    Description: InstanceId of the first EC2 instance
-    Value: !Ref EC2Instance
 
-  PublicDNS:
-    Description: Public DNS Name of the EC2 instance
-    Value: !GetAtt 
-      - EC2Instance
-      - PublicDnsName
-
-  PublicIP:
-    Description: Public IP address of the EC2 instance
-    Value: !GetAtt 
-      - EC2Instance
-      - PublicIp
