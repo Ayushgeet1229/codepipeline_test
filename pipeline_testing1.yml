@@ -15,9 +15,9 @@ Resources:
         Fn::Base64: |
           #!/bin/bash -xe
           apt-get update -y # good practice to update existing packages
-          apt-get install -y httpd # install web server 
-          systemctl start httpd
-          systemctl enable httpd
+          apt-get install -y Apache2 # install web server 
+          systemctl start Apache2
+          systemctl enable Apache2
           echo "jab we met" > /var/www/html/index.html
 
       
