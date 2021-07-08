@@ -14,10 +14,10 @@ Resources:
       UserData: 
         Fn::Base64: |
           #!/bin/bash -xe
-          apt-get update -y # good practice to update existing packages
-          apt-get install -y apache2 # install web server 
-          service apache2 start
-          service apache2 enable
+          sudo apt-get update -y # good practice to update existing packages
+          sudo apt-get install -y apache2 # install web server 
+          sudo service apache2 start
+          sudo service apache2 enable
           echo "jab we met" > /var/www/html/index.html
 
       
